@@ -10,6 +10,7 @@
 </head>
 <body>
  <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow">
+
     <div class="container">
       <a class="navbar-brand fw-bold" href="#">myLibrary</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -37,16 +38,85 @@
   <!-- Hero Section -->
   <header class="hero-section text-center text-white d-flex align-items-center">
     <div class="container">
-      <h1 class="display-3 fw-bold">Welcome to E-Library</h1>
+      <h1 class="display-3 fw-bold">Welcome to myLibrary</h1>
       <p class="lead my-3">Explore, Learn, and Book Courses Online</p>
-      <a href="#courses" class="btn btn-light btn-lg shadow">Browse Courses</a>
+       <!-- Search Bar with custom class for width -->
+    <div class="input-group mb-4 search-bar">
+        <input type="text" class="form-control" placeholder="Search Courses..." v-model="searchQuery" aria-label="Search Courses" aria-describedby="basic-addon2">
+        <span class="input-group-text" id="basic-addon2"><i class="fas fa-search"></i></span>
+      </div>
+      
     </div>
+     
   </header>
 
+  <!-- Sort UI Below Hero Section -->
+<div class="container mt-5" id="sort-section">
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+        <div class="d-flex justify-content-between">
+          <!-- Sort by dropdown -->
+          <div class="dropdown">
+            <button class="btn btn-outline-primary dropdown-toggle" type="button" id="sortByDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+              Sort By
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="sortByDropdown">
+              <li><a class="dropdown-item" href="#">Price</a></li>
+              <li><a class="dropdown-item" href="#">location</a></li>
+              <li><a class="dropdown-item" href="#">Title</a></li>
+            </ul>
+          </div>
   
-  <div id="app">
-    <!-- Content from Vue.js wil appear here-->
+          <!-- Ascending/Descending Order Dropdown -->
+          <div class="dropdown">
+            <button class="btn btn-outline-primary dropdown-toggle" type="button" id="orderDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+              Order
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="orderDropdown">
+              <li><a class="dropdown-item" href="#">Ascending</a></li>
+              <li><a class="dropdown-item" href="#">Descending</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
+  
+  <div id="app" class="container mt-4">
+    <!-- Show loading message -->
+    <div v-if="loading" class="text-center">
+      <p>Loading courses...</p>
+    </div>
+  
+    <!-- Show error message -->
+    <div v-if="error" class="alert alert-danger text-center">
+      {{ error }}
+    </div>
+  
+    <!-- Display courses -->
+    <div v-if="courses.length">
+      <div class="row">
+        <div class="col-md-4 mb-4" v-for="course in courses" :key="course._id">
+          <div class="card shadow">
+            <div class="card-body">
+              <h5 class="card-title">{{ course.title }}</h5>
+              <p class="card-text">
+                <strong>Location:</strong> {{ course.location }}<br>
+                <strong>Price:</strong> ${{ course.price }}<br>
+                <strong>Space Avaliable:</strong>{{ course.spacesAvailable }}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Show message if no courses are found -->
+    <div v-else-if="!loading" class="text-center">
+      <p>No courses available.</p>
+    </div>
+  </div>
+  
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
 <script src="vue.js"></script>

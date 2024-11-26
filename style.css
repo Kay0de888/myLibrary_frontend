@@ -20,7 +20,12 @@ body {
     transition: color 0.3s ease;
 }
 
-
+.search-bar {
+    width: 50%; /* Adjust the percentage to your preference */
+    max-width: 500px; /* Optional: Set a maximum width */
+    margin: 0 auto; /* Center the search bar */
+  }
+  
 
 
 .hero-section {
@@ -58,6 +63,32 @@ body {
     transform: translateY(-3px);
     
 }
+
+/* Sort UI Styling */
+#sort-section {
+    background-color: #f1f1f1; /* Light gray background */
+    padding: 20px 0;
+    border-radius: 8px;
+  }
+  
+  #sort-section .dropdown {
+    margin-right: 15px;
+  }
+  
+  #sort-section .btn {
+    width: 200px;
+    font-size: 1rem;
+  }
+  
+  #sort-section .dropdown-menu {
+    min-width: 150px;
+  }
+  
+  #sort-section .dropdown-item:hover {
+    background-color: #007bff;
+    color: white;
+  }
+  
 
 
 @media (max-width: 991px) {
