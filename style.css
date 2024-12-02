@@ -5,7 +5,6 @@ body {
     background-color: #f8f9fa;
 }
 
-
 .navbar {
     padding: 1rem 1.5rem;
 }
@@ -20,13 +19,35 @@ body {
     transition: color 0.3s ease;
 }
 
+.navbar-nav .nav-item {
+    position: relative;
+}
+
+.navbar-nav .nav-item i {
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: white; /* Set the color to white */
+}
+
+.navbar-nav .nav-item i:hover {
+    color: #f8f9fa; /* Slightly lighter color when hovered */
+}
+
+.cart-badge {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+    padding: 2px;
+    font-size: 5px;
+}
 .search-bar {
     width: 50%; /* Adjust the percentage to your preference */
     max-width: 500px; /* Optional: Set a maximum width */
     margin: 0 auto; /* Center the search bar */
-  }
-  
-
+}
 
 .hero-section {
     background: linear-gradient(to right, #4e79c0, #6fa1d4); 
@@ -37,62 +58,81 @@ body {
     padding: 3rem 1rem;
     color: white;
     text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3);
-  }
-  
-  .hero-section h1 {
+}
+
+.hero-section h1 {
     font-size: 3.5rem;
     margin-bottom: 1rem;
-  }
-  
-  .hero-section p {
+}
+
+.hero-section p {
     font-size: 1.5rem;
     margin-bottom: 2rem;
-  }
-  
-  .hero-section .btn {
+}
+
+.hero-section .btn {
     font-size: 1.2rem;
     padding: 0.8rem 1rem;
     border-radius: 25px;
     transition: background-color 0.3s ease, transform 0.2s ease;
-  }
-  
- .hero-section .btn:hover {
-    background-color: #0d6efd; 
-    color: #fff;
-    border: 2px solid #fff;
-    transform: translateY(-3px);
-    
 }
 
-/* Sort UI Styling */
+.hero-section .btn:hover {
+    background-color: #3b5998;
+    transform: scale(1.05);
+}
+
 #sort-section {
-    background-color: #f1f1f1; /* Light gray background */
-    padding: 20px 0;
-    border-radius: 8px;
-  }
-  
-  #sort-section .dropdown {
-    margin-right: 15px;
-  }
-  
-  #sort-section .btn {
-    width: 200px;
-    font-size: 1rem;
-  }
-  
-  #sort-section .dropdown-menu {
-    min-width: 150px;
-  }
-  
-  #sort-section .dropdown-item:hover {
+    margin-bottom: 2rem;
+}
+
+#sort-section .dropdown-toggle {
     background-color: #007bff;
     color: white;
+    border: none;
+}
+
+#sort-section .dropdown-menu {
+    width: 100%;
+    min-width: 150px;
+}
+
+.card-body {
+    padding: 1.5rem;
+}
+
+.card-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.card-text {
+    font-size: 1rem;
+}
+
+.card {
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.card-img-top {
+    max-height: 200px;
+    object-fit: cover;
+}
+
+.btn {
+    font-size: 1rem;
+    padding: 0.75rem;
+}
+
+footer {
+    background-color: #343a40;
+    color: white;
+    text-align: center;
+    padding: 1rem 0;
+}
+
+.invalid-feedback {
+    font-size: 0.875rem;
+    color: #dc3545;
   }
   
-
-
-@media (max-width: 991px) {
-    .navbar-nav {
-        margin-top: 1rem;
-    }
-}

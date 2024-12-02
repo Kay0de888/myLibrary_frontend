@@ -6,119 +6,197 @@
   <title>myLibrary</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
- <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
- <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow">
-
-    <div class="container">
-      <a class="navbar-brand fw-bold" href="#">myLibrary</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ms-auto">
-          <li class="nav-item">
-            <a class="nav-link text-white fw-medium" href="#courses">Courses</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link text-white fw-medium" href="#contact">Contact</a>
-          </li>
-          <!-- Cart Icon -->
-          <li class="nav-item">
-            <a class="nav-link text-white" href="#cart">
-              <i class="fas fa-shopping-cart"></i> 
-            </a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </nav>
-
-  <!-- Hero Section -->
-  <header class="hero-section text-center text-white d-flex align-items-center">
-    <div class="container">
-      <h1 class="display-3 fw-bold">Welcome to myLibrary</h1>
-      <p class="lead my-3">Explore, Learn, and Book Courses Online</p>
-       <!-- Search Bar with custom class for width -->
-    <div class="input-group mb-4 search-bar">
-        <input type="text" class="form-control" placeholder="Search Courses..." v-model="searchQuery" aria-label="Search Courses" aria-describedby="basic-addon2">
-        <span class="input-group-text" id="basic-addon2"><i class="fas fa-search"></i></span>
-      </div>
-      
-    </div>
-     
-  </header>
-
-  <!-- Sort UI Below Hero Section -->
-<div class="container mt-5" id="sort-section">
-    <div class="row justify-content-center">
-      <div class="col-md-8">
-        <div class="d-flex justify-content-between">
-          <!-- Sort by dropdown -->
-          <div class="dropdown">
-            <button class="btn btn-outline-primary dropdown-toggle" type="button" id="sortByDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-              Sort By
-            </button>
-            <ul class="dropdown-menu" aria-labelledby="sortByDropdown">
-              <li><a class="dropdown-item" href="#">Price</a></li>
-              <li><a class="dropdown-item" href="#">location</a></li>
-              <li><a class="dropdown-item" href="#">Title</a></li>
-            </ul>
-          </div>
-  
-          <!-- Ascending/Descending Order Dropdown -->
-          <div class="dropdown">
-            <button class="btn btn-outline-primary dropdown-toggle" type="button" id="orderDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-              Order
-            </button>
-            <ul class="dropdown-menu" aria-labelledby="orderDropdown">
-              <li><a class="dropdown-item" href="#">Ascending</a></li>
-              <li><a class="dropdown-item" href="#">Descending</a></li>
-            </ul>
-          </div>
+  <div id="app">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow">
+      <div class="container">
+        <a class="navbar-brand fw-bold" href="#">myLibrary</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link text-white fw-medium" href="#courses">Courses</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-white fw-medium" href="#contact">Contact</a>
+            </li>
+            <!-- Cart Icon -->
+            <li class="nav-item">
+              <i class="fas fa-shopping-cart position-relative" @click="togglePage">
+                <span v-if="cartCount > 0" class="badge bg-danger position-absolute top-0 start-100 translate-middle p-2 rounded-circle">
+                  {{ cartCount }}
+                </span>
+              </i>
+            </li>
+          </ul>
         </div>
       </div>
-    </div>
-  </div>
-  
-  <div id="app" class="container mt-4">
-    <!-- Show loading message -->
-    <div v-if="loading" class="text-center">
-      <p>Loading courses...</p>
-    </div>
-  
-    <!-- Show error message -->
-    <div v-if="error" class="alert alert-danger text-center">
-      {{ error }}
-    </div>
-  
-    <!-- Display courses -->
-    <div v-if="courses.length">
-      <div class="row">
-        <div class="col-md-4 mb-4" v-for="course in courses" :key="course._id">
-          <div class="card shadow">
-            <div class="card-body">
-              <h5 class="card-title">{{ course.title }}</h5>
-              <p class="card-text">
-                <strong>Location:</strong> {{ course.location }}<br>
-                <strong>Price:</strong> ${{ course.price }}<br>
-                <strong>Space Avaliable:</strong>{{ course.spacesAvailable }}
-              </p>
+    </nav>
+
+    <!-- Main Content -->
+    <!-- Index Page -->
+    <div v-if="currentPage === 'index'">
+      <!-- Hero Section -->
+      <header class="hero-section text-center text-white d-flex align-items-center">
+        <div class="container">
+          <h1 class="display-3 fw-bold">Welcome to myLibrary</h1>
+          <p class="lead my-3">Explore, Learn, and Book Courses Online</p>
+          <div class="input-group mb-4 search-bar">
+            <input type="text" class="form-control" placeholder="Search Courses..." v-model="searchQuery" aria-label="Search Courses" aria-describedby="basic-addon2">
+            <span class="input-group-text" id="basic-addon2"><i class="fas fa-search"></i></span>
+          </div>
+        </div>
+      </header>
+
+      <!-- Sort UI Below Hero Section -->
+      <div class="container mt-5" id="sort-section">
+        <div class="row justify-content-center">
+          <div class="col-md-8">
+            <div class="d-flex justify-content-between">
+              <div class="dropdown">
+                <button class="btn btn-outline-primary dropdown-toggle" type="button" id="sortByDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                  Sort By
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="sortByDropdown">
+                  <li><a class="dropdown-item" href="#" @click.prevent="sortCourses('price')">Price</a></li>
+                  <li><a class="dropdown-item" href="#" @click.prevent="sortCourses('location')">Location</a></li>
+                  <li><a class="dropdown-item" href="#" @click.prevent="sortCourses('title')">Title</a></li>
+                </ul>
+              </div>
+              <div class="dropdown">
+                <button class="btn btn-outline-primary dropdown-toggle" type="button" id="orderDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                  Order
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="orderDropdown">
+                  <li><a class="dropdown-item" href="#" @click.prevent="toggleSortOrder">Ascending</a></li>
+                  <li><a class="dropdown-item" href="#" @click.prevent="toggleSortOrder">Descending</a></li>
+                </ul>
+              </div>
             </div>
           </div>
         </div>
       </div>
+
+      <div class="container mt-4">
+        <!-- Show loading message -->
+        <div v-if="loading" class="text-center">
+          <p>Loading courses...</p>
+        </div>
+
+        <!-- Show error message -->
+        <div v-if="error" class="alert alert-danger text-center">
+          {{ error }}
+        </div>
+
+        <!-- Display courses -->
+        <div v-if="filteredCourses.length">
+          <div class="row">
+            <div class="col-md-4 mb-4" v-for="course in filteredCourses" :key="course._id">
+              <div class="card shadow">
+                <img :src="course.image" class="card-img-top" alt="Course Image" />
+                <div class="card-body">
+                  <h5 class="card-title">{{ course.title }}</h5>
+                  <p class="card-text">
+                    <strong>Location:</strong> {{ course.location }}<br>
+                    <strong>Price:</strong> ${{ course.price }}<br>
+                    <strong>Spaces Available:</strong> {{ course.spacesAvailable }}
+                  </p>
+                  <!-- Add to Cart Button -->
+                  <button 
+                    class="btn btn-primary w-100" 
+                    :disabled="course.spacesAvailable === 0" 
+                    @click="addToCart(course)"
+                  >
+                    {{ course.spacesAvailable === 0 ? 'Out of Stock' : 'Add to Cart' }}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Show message if no courses are found -->
+        <div v-else-if="!loading" class="text-center">
+          <p>No courses available.</p>
+        </div>
+      </div>
     </div>
-  
-    <!-- Show message if no courses are found -->
-    <div v-else-if="!loading" class="text-center">
-      <p>No courses available.</p>
+
+    <!-- Checkout Page -->
+    <div v-if="currentPage === 'checkout'">
+      <div class="container mt-4">
+        <h1>Checkout</h1>
+        <p>Your cart contains the following courses:</p>
+        <ul class="list-group">
+          <li v-for="course in cart" :key="course._id" class="list-group-item d-flex justify-content-between align-items-center">
+            {{ course.title }}
+            <button class="btn btn-danger btn-sm" @click="removeFromCart(course)">Remove</button>
+          </li>
+        </ul>
+        <p v-if="cart.length === 0">Your cart is empty.</p>
+
+        <!-- Checkout Form -->
+        <div v-if="cart.length > 0" class="mt-4">
+          <form @submit.prevent="checkout">
+            <!-- Name Input -->
+            <div class="mb-3">
+              <label for="name" class="form-label">Full Name</label>
+              <input 
+                type="text" 
+                class="form-control" 
+                id="name" 
+                v-model="checkoutForm.name" 
+                :class="{'is-invalid': !isNameValid}" 
+                placeholder="Enter your full name" 
+                required 
+              >
+              <div v-if="!isNameValid" class="invalid-feedback">Please enter a valid name (only letters).</div>
+            </div>
+
+            <!-- Phone Input -->
+            <div class="mb-3">
+              <label for="phone" class="form-label">Phone Number</label>
+              <input 
+                type="text" 
+                class="form-control" 
+                id="phone" 
+                v-model="checkoutForm.phone" 
+                :class="{'is-invalid': !isPhoneValid}" 
+                placeholder="Enter your phone number" 
+                required
+              >
+              <div v-if="!isPhoneValid" class="invalid-feedback">Please enter a valid phone number (only numbers).</div>
+            </div>
+
+            <!-- Checkout Button -->
+            <button 
+              type="submit" 
+              class="btn btn-success w-100" 
+              :disabled="!isNameValid || !isPhoneValid"
+            >
+              Checkout
+            </button>
+          </form>
+
+          <!-- Success or Error Message -->
+          <div v-if="successMessage" class="alert alert-success mt-3">
+            {{ successMessage }}
+          </div>
+          <div v-if="error" class="alert alert-danger mt-3">
+            {{ error }}
+          </div>
+        </div>
+      </div>
     </div>
   </div>
-  
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
-<script src="vue.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+  <script src="vue.js"></script>
 </body>
 </html>
