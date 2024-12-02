@@ -1,22 +1,22 @@
 new Vue({
     el: "#app",
     data: {
-      currentPage: "index", // Tracks the current page ("index" or "checkout")
-      courses: [], // All available courses
-      cart: [], // List of courses added to the cart
-      searchQuery: "", // For search functionality
-      loading: true, // Indicates loading state
-      error: null, // Stores error messages
-      sortKey: "title", // Default sort key
-      sortOrder: "asc", // Default sort order (ascending)
+      currentPage: "index", 
+      courses: [], 
+      cart: [], 
+      searchQuery: "", 
+      loading: true, 
+      error: null, 
+      sortKey: "title", 
+      sortOrder: "asc", 
       checkoutForm: {
         name: "",
         phone: "",
-      }, // Data for checkout form
-      successMessage: "", // Success message for checkout
+      }, 
+      successMessage: "", 
     },
     computed: {
-      // Filtered courses based on the search query
+      
       filteredCourses() {
         const query = this.searchQuery.toLowerCase();
         return this.courses
@@ -47,43 +47,43 @@ new Vue({
       },
     },
     methods: {
-      // Toggle between "index" and "checkout" pages
+      
       togglePage() {
         this.currentPage = this.currentPage === "index" ? "checkout" : "index";
       },
-      // Add a course to the cart
+      
       addToCart(course) {
         const index = this.courses.findIndex((c) => c._id === course._id);
         if (index !== -1 && this.courses[index].spacesAvailable > 0) {
-          this.courses[index].spacesAvailable -= 1; // Reduce available spaces
-          this.cart.push({ ...course }); // Add to cart
+          this.courses[index].spacesAvailable -= 1; 
+          this.cart.push({ ...course }); 
         }
       },
-      // Remove a course from the cart
+      
       removeFromCart(course) {
         const index = this.cart.findIndex((c) => c._id === course._id);
         if (index !== -1) {
-          this.cart.splice(index, 1); // Remove from cart
-          // Restore available spaces in the courses list
+          this.cart.splice(index, 1); 
+          
           const courseIndex = this.courses.findIndex((c) => c._id === course._id);
           if (courseIndex !== -1) {
             this.courses[courseIndex].spacesAvailable += 1;
           }
         }
       },
-      // Sort courses based on a key (e.g., "price", "location", "title")
+      
       sortCourses(key) {
         this.sortKey = key;
       },
-      // Toggle between ascending and descending order
+      
       toggleSortOrder() {
         this.sortOrder = this.sortOrder === "asc" ? "desc" : "asc";
       },
-      // Fetch courses from the backend
+      
       fetchCourses() {
         this.loading = true;
         this.error = null;
-        fetch("http://localhost:5000/api/courses") // Full URL for the backend
+        fetch("http://localhost:5000/api/courses") 
           .then((response) => {
             if (!response.ok) {
               throw new Error("Failed to fetch courses");
@@ -91,16 +91,16 @@ new Vue({
             return response.json();
           })
           .then((data) => {
-            this.courses = data; // Populate the courses array
+            this.courses = data; 
           })
           .catch((err) => {
             this.error = "Error retrieving courses: " + err.message;
           })
           .finally(() => {
-            this.loading = false; // End loading state
+            this.loading = false; 
           });
       },
-      // Handle the checkout process
+      
       checkout() {
         if (this.isNameValid && this.isPhoneValid && this.cart.length > 0) {
           const orderData = {
@@ -109,7 +109,7 @@ new Vue({
             cart: this.cart,
           };
   
-          // Send POST request to the server
+          
           fetch("http://localhost:5000/checkout", {
             method: "POST",
             headers: {
@@ -120,11 +120,11 @@ new Vue({
             .then((response) => response.json())
             .then((data) => {
               if (data.error) {
-                this.error = data.error; // Display server-side error
+                this.error = data.error; 
               } else {
-                this.successMessage = data.message; // Show success message from server
-                this.cart = []; // Clear the cart after checkout
-                this.checkoutForm.name = ""; // Reset form fields
+                this.successMessage = data.message; 
+                this.cart = []; 
+                this.checkoutForm.name = ""; 
                 this.checkoutForm.phone = "";
               }
             })
@@ -132,12 +132,12 @@ new Vue({
               this.error = "Error during checkout: " + err.message;
             });
         } else {
-          this.error = "Please enter valid information."; // Show validation error message
+          this.error = "Please enter valid information."; 
         }
       },
     },
     mounted() {
-      this.fetchCourses(); // Fetch courses when the app is mounted
+      this.fetchCourses(); 
     },
   });
   
