@@ -10,7 +10,6 @@
 </head>
 <body>
   <div id="app">
-    <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow">
       <div class="container">
         <a class="navbar-brand fw-bold" href="#">myLibrary</a>
@@ -38,10 +37,9 @@
       </div>
     </nav>
 
-    <!-- Main Content -->
-    <!-- Index Page -->
+   
     <div v-if="currentPage === 'index'">
-      <!-- Hero Section -->
+      
       <header class="hero-section text-center text-white d-flex align-items-center">
         <div class="container">
           <h1 class="display-3 fw-bold">Welcome to myLibrary</h1>
@@ -53,7 +51,7 @@
         </div>
       </header>
 
-      <!-- Sort UI Below Hero Section -->
+      
       <div class="container mt-5" id="sort-section">
         <div class="row justify-content-center">
           <div class="col-md-8">
@@ -83,17 +81,17 @@
       </div>
 
       <div class="container mt-4">
-        <!-- Show loading message -->
+        
         <div v-if="loading" class="text-center">
           <p>Loading courses...</p>
         </div>
 
-        <!-- Show error message -->
+       
         <div v-if="error" class="alert alert-danger text-center">
           {{ error }}
         </div>
 
-        <!-- Display courses -->
+       
         <div v-if="filteredCourses.length">
           <div class="row">
             <div class="col-md-4 mb-4" v-for="course in filteredCourses" :key="course._id">
@@ -120,14 +118,14 @@
           </div>
         </div>
 
-        <!-- Show message if no courses are found -->
+        
         <div v-else-if="!loading" class="text-center">
           <p>No courses available.</p>
         </div>
       </div>
     </div>
 
-    <!-- Checkout Page -->
+    
     <div v-if="currentPage === 'checkout'">
       <div class="container mt-4">
         <h1>Checkout</h1>
@@ -140,10 +138,10 @@
         </ul>
         <p v-if="cart.length === 0">Your cart is empty.</p>
 
-        <!-- Checkout Form -->
+        
         <div v-if="cart.length > 0" class="mt-4">
           <form @submit.prevent="checkout">
-            <!-- Name Input -->
+            
             <div class="mb-3">
               <label for="name" class="form-label">Full Name</label>
               <input 
@@ -158,7 +156,7 @@
               <div v-if="!isNameValid" class="invalid-feedback">Please enter a valid name (only letters).</div>
             </div>
 
-            <!-- Phone Input -->
+           
             <div class="mb-3">
               <label for="phone" class="form-label">Phone Number</label>
               <input 
@@ -173,7 +171,7 @@
               <div v-if="!isPhoneValid" class="invalid-feedback">Please enter a valid phone number (only numbers).</div>
             </div>
 
-            <!-- Checkout Button -->
+            
             <button 
               type="submit" 
               class="btn btn-success w-100" 
@@ -183,7 +181,7 @@
             </button>
           </form>
 
-          <!-- Success or Error Message -->
+          
           <div v-if="successMessage" class="alert alert-success mt-3">
             {{ successMessage }}
           </div>
